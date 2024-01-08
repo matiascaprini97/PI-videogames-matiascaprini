@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const URL = "https://api.rawg.io/api/games";
+const URL = "https://api.rawg.io/api/games/";
 const KEY = "9350cd30f5af4d8392270aa555d4df37";
 
 

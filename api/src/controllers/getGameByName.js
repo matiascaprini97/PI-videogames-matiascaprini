@@ -9,6 +9,7 @@ const getGameByName = async (req, res) => {
     try {
         const { name } = req.query;
         // Buscar en la base de datos local
+        console.log("Buscando en la base de datos local...");
         const gameNameDB = await Videogame.findAll({
             where: {
                 name: {
@@ -16,6 +17,7 @@ const getGameByName = async (req, res) => {
                 },
             },
         });
+        console.log("Resultados de la base de datos local:", gameNameDB);
         // Si se encontraron resultados en la base de datos local, devolverlos
 
         if (gameNameDB.length > 0) {
@@ -25,15 +27,28 @@ const getGameByName = async (req, res) => {
         // Si no se encontraron resultados en la base de datos local, buscar en la API
 
         const { data } = await axios(`${URL.replace('{name}', encodeURIComponent(name))}?key=${KEY}`);
-        const { description, plataform, image, released, rating, id } = data;
+        const { description, parent_platforms, background_image, released, rating, id } = data;
+        console.log("Respuesta de la API:", data);
+        const arrPlataform = [];
+
+        if (parent_platforms) {
+            for (var i = 0; i < parent_platforms.length; i++) {
+                // Verificar si la propiedad "platform" existe en el objeto actual
+                if (parent_platforms[i].platform && parent_platforms[i].platform.name) {
+                    // Agregar el nombre de la plataforma al nuevo array
+                    arrPlataform.push(parent_platforms[i].platform.name);
+                }
+            }
+        }
+
         const gameNameAPI = {
-            id: id || null,
-            name: name || null,
-            image: image || null,
-            description: description || null,
-            plataform: plataform || null,
-            released: released || null,
-            rating: rating || null,
+            id,
+            name,
+            image: background_image,
+            description,
+            plataform: arrPlataform,
+            released,
+            rating,
         };
 
         console.log("Respuesta de la API:", gameNameAPI); // Agrega esta línea para depurar

@@ -17,7 +17,7 @@ function App() {
     const exists = games.find(char => char.id === Number(id));
     if (id === 'random') {
       // Fetch random game
-      const randomId = Math.floor(Math.random() * 25 + 1);
+      const randomId = Math.floor(Math.random() * 5679 + 1);
 
       axios(`http://localhost:3001/videogames/${randomId}`)
         .then(({ data }) => {

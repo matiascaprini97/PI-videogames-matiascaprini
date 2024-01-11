@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'zrnic';
+    src: url('../../../fonts/zrnic\ rg.ttf');
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0);
+    background-size: auto;
+    background-position: center;
+    padding: 10px;
+    height: 80vh;
+    overflow-y: auto;
+
+}
+
+.nuevoo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.title {
+    color: #fff;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-family: 'zrnic', sans-serif;
+}
+
+
+.envelop {
+    background-color: rgba(0, 0, 0, 0.475);
+    background-image: url('https://wallpapercave.com/wp/wp11431137.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 0px;
+    position: fixed;
+}

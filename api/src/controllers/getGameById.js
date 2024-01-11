@@ -8,9 +8,10 @@ const getGameById = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const { name, description, parent_platforms, background_image, released, rating } = (await axios(`${URL}${id}?key=${KEY}`)).data
+        const { name, description, parent_platforms, background_image, released, rating, genres } = (await axios(`${URL}${id}?key=${KEY}`)).data
 
         const arrPlataform = [];
+        const arrGenres = [];
 
         if (parent_platforms) {
             for (var i = 0; i < parent_platforms.length; i++) {
@@ -20,9 +21,23 @@ const getGameById = async (req, res) => {
                     arrPlataform.push(parent_platforms[i].platform.name);
                 }
             }
+
+        }
+        if (genres) {
+            for (var i = 0; i < genres.length; i++) {
+                // Verificar si la propiedad "platform" existe en el objeto actual
+                if (genres[i].name) {
+                    // Agregar el nombre de la plataforma al nuevo array
+                    arrGenres.push(genres[i].name);
+                }
+            }
+
         }
 
-        const game = { id, name, description, Plataforms: arrPlataform, Image: background_image, released, rating };
+
+
+
+        const game = { id, name, description, platforms: arrPlataform, image: background_image, released, rating, genres: arrGenres };
 
         return game.name
             ? res.json(game)

@@ -1,23 +1,53 @@
-import Card from '../Card/Card.jsx'
+import styles from './Home.module.scss';
+import CardsContainer from '../CardsContainer/CardsContainer.jsx';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getVideogames } from '../../redux/actions.js';
+import Loader from '../Utils/Loader/Loader.jsx';
 
-const Home = ({ games, onClose }) => {
+const Home = () => {
+    // spinner
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+        return () => clearTimeout(timer);
+    }, []);
+    // dispatch
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getVideogames());
+    }, []);
+
+    // const next = () => {
+    //     dispatch(GET_VIDEOGAMESNEXT());
+    // };
+    // const prev = () => {
+    //     dispatch(getVideogames());
+    // };
+
+
+
     return (
-        <div >
-            {games.map((game) => (
-                <Card
-                    key={game.id}
-                    id={game.id}
-                    name={game.name}
-                    description={game.description}
-                    rating={game.rating}
-                    plataforms={game.plataforms}
-                    released={game.released}
-                    image={game.image}
-                    onClose={onClose}
-                />
-            ))}
-        </div>
+        <>
+            {loading ? (
+
+                <Loader />
+
+            ) : (
+                <div className={styles.envelop}>
+                    <div className={styles.container}>
+                        <h1 className={styles.title}>Videogames</h1>
+                        <CardsContainer />
+                    </div>
+                </div>
+            )
+            }
+        </>
     );
-}
+};
 
 export default Home;

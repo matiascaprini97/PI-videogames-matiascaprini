@@ -27,9 +27,11 @@ const getGameByName = async (req, res) => {
         // Si no se encontraron resultados en la base de datos local, buscar en la API
 
         const { data } = await axios(`${URL.replace('{name}', encodeURIComponent(name))}?key=${KEY}`);
-        const { description, parent_platforms, background_image, released, rating, id } = data;
+        const { description, parent_platforms, background_image, released, rating, id, genres } = data;
         console.log("Respuesta de la API:", data);
         const arrPlataform = [];
+        const arrGenres = [];
+
 
         if (parent_platforms) {
             for (var i = 0; i < parent_platforms.length; i++) {
@@ -40,15 +42,26 @@ const getGameByName = async (req, res) => {
                 }
             }
         }
+        if (genres) {
+            for (var i = 0; i < genres.length; i++) {
+                // Verificar si la propiedad "platform" existe en el objeto actual
+                if (genres[i].name) {
+                    // Agregar el nombre de la plataforma al nuevo array
+                    arrGenres.push(genres[i].name);
+                }
+            }
+
+        }
 
         const gameNameAPI = {
             id,
             name,
             image: background_image,
             description,
-            plataform: arrPlataform,
+            platforms: arrPlataform.join(", "),
             released,
             rating,
+            genres: arrGenres.join(" - "),
         };
 
         console.log("Respuesta de la API:", gameNameAPI); // Agrega esta línea para depurar
@@ -61,7 +74,7 @@ const getGameByName = async (req, res) => {
             });
         }
 
-        return res.status(200).json([gameNameAPI]);
+        return res.status(200).json(gameNameAPI);
     } catch (error) {
         console.error("Error en la función getGameByName:", error);
         res.status(500).json({ error: error.message });

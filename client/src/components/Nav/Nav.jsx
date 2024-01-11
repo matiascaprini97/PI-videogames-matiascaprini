@@ -1,26 +1,23 @@
 import { Link } from "react-router-dom"
-import SearchBar from "../SearchBar/SearchBar"
+import style from "./Nav.module.scss";
+import SearchBar from "../SearchBar/SearchBar.jsx";
 import PATHROUTES from "../../helper/PathRoutes"
 
-const Nav = ({ onSearch }) => {
+const Nav = () => {
     return (
-        <div >
-            <div>
-                <div>
-                    <Link to={PATHROUTES.HOME}>
-                        <span>Home</span>
-                    </Link>
-                    <Link to={PATHROUTES.ABOUT} >
-                        <span>About</span>
-                    </Link>
-                    <Link to={PATHROUTES.FORM} >
-                        <span>Crear Nuevo Juego</span>
-                    </Link>
-                </div>
-                <SearchBar onSearch={onSearch} />
+        <div className={style.envelop}>
+            <div className={style.Container}>
+                <SearchBar className={style.SearchBar} />
+                <Link to={PATHROUTES.HOME}>
+                    <button className={style.button}>Home</button>
+                </Link>
+                <div></div>
+                <Link to={PATHROUTES.FORM}>
+                    <button className={style.button}>Create Videogame</button>
+                </Link>
             </div>
         </div>
     )
 }
 
-export default Nav
+export default Nav;

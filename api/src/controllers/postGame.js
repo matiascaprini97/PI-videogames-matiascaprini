@@ -20,8 +20,8 @@ const { Videogame } = require('../db.js');
 // module.exports = postGame;
 
 const postGame = async (req, res) => {
-    let { id, name, description, plataforms, image, released, rating } = req.body;
-    if (name === "" || description === "" || plataforms === "" || released === "" || rating === "" || image === "" || id === "") res.status(400).send("Faltan datos");
+    let { genre, name, description, plataforms, image, released, rating } = req.body;
+    if (name === "" || description === "" || plataforms === "" || released === "" || rating === "" || image === "" || genre === "") res.status(400).send("Faltan datos");
     try {
         const [game, created] = await Videogame.findOrCreate({
             where: { name },
@@ -31,7 +31,7 @@ const postGame = async (req, res) => {
                 image,
                 released,
                 rating,
-                id,
+                genre,
             }
         });
 

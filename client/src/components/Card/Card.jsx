@@ -1,21 +1,16 @@
+import styles from './Card.module.scss';
 import { Link } from "react-router-dom";
 
 const Card = (props) => {
-    const { name, plataforms, description, released, id, rating, image, onClose, } = props;
+    const id = props.id
     return (
-        <div>
-            <button onClick={() => onClose(id)}>☠️</button>
+        <div className={styles.Container}>
             <Link to={`/detail/${id}`}>
-                <h2>Name: {name}</h2>
+                <button className={styles.button}>{props.name}</button>
             </Link>
-            <img src={image} alt=" " />
-            <h2>Descripción: {description}</h2>
-            <h2>Rating: {rating}</h2>
-            <h2>Plataformas: {plataforms}</h2>
-            <h2>Realizado: {released}</h2>
+            <img className={styles.image} src={props.image} alt="" />
+            <p className={styles.text}>Genres: {props.genres}</p>
         </div>
-    );
-}
-
-
-export default Card;
+    )
+};
+export default Card; 

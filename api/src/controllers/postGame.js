@@ -1,49 +1,30 @@
-const { Videogame } = require('../db.js');
-
-// const postGame = async (req, res) => {
-//     let { name, description, plataform, image, released, rating } = req.body;
-
-//     try {
-//         if (name && description && plataform && image && released && rating) {
-//             await Videogame.findOrCreate({
-//                 where: { name, description, plataform, image, released, rating }
-//             });
-//             const game = await Videogame.findAll();
-//             return res.status(201).json(game);
-//         }
-//         return res.status(401).json({ message: 'Faltan datos' });
-//     } catch (error) {
-//         return res.status(500).json({ message: error });
-//     };
-// };
-
-// module.exports = postGame;
+const { Videogame, Genre } = require('../db.js');
 
 const postGame = async (req, res) => {
-    let { genre, name, description, plataforms, image, released, rating } = req.body;
-    if (name === "" || description === "" || plataforms === "" || released === "" || rating === "" || image === "" || genre === "") res.status(400).send("Faltan datos");
+    let unGame = req.body;
+    let { genre, name, description, platforms, image, released, rating } = req.body;
+    if (name === "" || description === "" || platforms === "" || released === "" || rating === "" || image === "" || genre === "") res.status(400).send("Faltan datos");
     try {
         const [game, created] = await Videogame.findOrCreate({
             where: { name },
             defaults: {
                 description,
-                plataforms,
+                platforms,
                 image,
                 released,
                 rating,
-                genre,
             }
         });
 
-        if (!created) {
-            return res.status(400).json({ message: 'El juego ya existe' });
+        if (created) {
+            await game.addGenre(unGame.Genre);
+            res.status(200).json("Juego Creado!");
+        } else {
+            res.status(400).json("Ese juego ya existe!")
         }
 
-        return res.status(200).json({ game });
-
     } catch (error) {
-
-        res.status(500).send(error.message);
+        res.status(500).json({ error: error.message })
     }
 }
 

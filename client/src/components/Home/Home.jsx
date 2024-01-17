@@ -22,15 +22,6 @@ const Home = () => {
         dispatch(getVideogames());
     }, []);
 
-    // const next = () => {
-    //     dispatch(GET_VIDEOGAMESNEXT());
-    // };
-    // const prev = () => {
-    //     dispatch(getVideogames());
-    // };
-
-
-
     return (
         <>
             {loading ? (
@@ -39,6 +30,24 @@ const Home = () => {
 
             ) : (
                 <div className={styles.envelop}>
+                    <select>
+                        <option value="">Todos los géneros</option>
+                        {/* {types.map((type) => (
+                            // <option key={type.name} value={type.name}>
+                            //     {type.name}
+                            // </option>
+                        ))} */}
+                    </select>
+
+                    <select >
+                        <option value="">Todos los orígenes</option>
+                        <option value="API">API</option>
+                        <option value="DB">DB</option>
+                    </select>
+                    <select>
+                        <option value="asc">Ascendente</option>
+                        <option value="desc">Descendente</option>
+                    </select>
                     <div className={styles.container}>
                         <h1 className={styles.title}>Videogames</h1>
                         <CardsContainer />

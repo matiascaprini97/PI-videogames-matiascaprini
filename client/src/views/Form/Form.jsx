@@ -1,11 +1,17 @@
 import { useState } from "react";
 import axios from 'axios';
+import UUID from 'uuid-int';
 
 import styles from './Form.module.scss'
 
 const Form = () => {
 
+    // const id = 0;
+
+    // const generator = UUID(id);
+
     const [form, setForm] = useState({
+        // id: generator.uuid(),
         name: "",
         description: "",
         platforms: "",
@@ -16,6 +22,7 @@ const Form = () => {
     });
 
     const [errors, setErrors] = useState({
+        // id: generator.uuid(),
         name: "",
         description: "",
         platforms: "",
@@ -58,7 +65,7 @@ const Form = () => {
         <div className={styles.Container}>
             <div className={styles.card}>
                 <h1 className={styles.text}>Create a new videogame</h1>
-                <form onSubmit={submitHandler}>
+                <form className={styles.form} onSubmit={submitHandler}>
                     <div>
                         <label className={styles.text} htmlFor="">Game title: </label>
                         <input type="text" value={form.name} onChange={changeHandler} name="name" />
@@ -71,7 +78,7 @@ const Form = () => {
                     </div>
                     <div>
                         <label className={styles.text} htmlFor="">Platforms: </label>
-                        <input type="text" value={form.platforms} onChange={changeHandler} name="platforms" /> {/* array de opciones varias */}
+                        <input type="text" value={form.platforms} onChange={changeHandler} name="platforms" />
                     </div>
                     <div>
                         <label className={styles.text} htmlFor="">Image URL: </label>
@@ -90,6 +97,11 @@ const Form = () => {
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
                         </select>
                     </div>
 

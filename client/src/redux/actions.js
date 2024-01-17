@@ -5,6 +5,7 @@ export const GET_VIDEOGAME = "GET_VIDEOGAME";
 export const GET_VIDEOGAMESNEXT = "GET_VIDEOGAMENEXT";
 export const GET_SORTED_AZ = "GET_SORTED_AZ";
 export const SET_GAMES = "SET_GAMES";
+export const GET_VIDEOGAMESPREV = "GET_VIDEOGAMESPREV";
 
 export const getVideogame = (id) => {
     return async function (dispatch) {
@@ -34,8 +35,21 @@ export const getVideogames = () => {
 export const getVideogamesNext = () => {
     return async function (dispatch) {
         const apiData = await axios.get("http://localhost:3001/videogames");
-        const videoGames = apiData.data[1].results;
-        dispatch({ type: GET_VIDEOGAMESNEXT, payload: videoGames })
+        const videoGames = apiData.data[0].next;
+        const apiDataDos = await axios.get(videoGames);
+        const arr = apiDataDos.data.results;
+        dispatch({ type: GET_VIDEOGAMESNEXT, payload: arr })
+    };
+
+}
+
+export const getVideogamesPrev = () => {
+    return async function (dispatch) {
+        const apiData = await axios.get("http://localhost:3001/videogames");
+        const videoGames = apiData.data[0].next;
+        const apiDataDos = await axios.get(videoGames);
+        const arr = apiDataDos.data.results;
+        dispatch({ type: GET_VIDEOGAMESPREV, payload: arr })
     };
 
 }

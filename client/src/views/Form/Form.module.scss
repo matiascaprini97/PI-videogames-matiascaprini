@@ -20,8 +20,24 @@
     }
 }
 
+.form {
+    position: relative;
+    background-size: auto;
+    background-color: #300930;
+    background-position: center;
+    padding: 10px;
+    height: 80vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+    flex-direction: column;
+    opacity: 0.8;
+}
+
 .Container {
-    background-image: url('https://wallpapercave.com/wp/wp11431137.jpg');
+    background-image: url('https://wallpapers.com/images/featured/game-x6izcv0166bvtnu3.jpg');
     background-size: cover;
     background-position: center;
     padding: 60px;
@@ -30,7 +46,7 @@
 }
 
 .text {
-    color: #706e6e;
+    color: #c5c3c3;
 }
 
 .button {

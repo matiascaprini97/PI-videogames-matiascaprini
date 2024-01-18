@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import PATHROUTES from '../../helper/PathRoutes.js';
 import { useEffect, useState } from 'react';
-import { getVideogame } from '../../redux/actions.js';
+import { getVideogamePorId } from '../../redux/actions.js';
 import { useParams } from "react-router-dom";
 import Loader from '../../components/Utils/Loader/Loader.jsx';
 import styles from './Detail.module.scss'
@@ -23,7 +23,7 @@ const Detail = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getVideogame(id));
+        dispatch(getVideogamePorId(id));
     }, [dispatch, id]);
 
     const videoGame = useSelector(state => state.videoGame)

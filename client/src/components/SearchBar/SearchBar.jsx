@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./SearchBar.module.scss"
 import { useDispatch } from 'react-redux';
-import { fetchGames } from '../../redux/actions';
+import { getVideogame, getVideogames } from '../../redux/actions';
 
 const SearchBar = () => {
 
@@ -9,17 +9,23 @@ const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearch = () => {
-        // Llama a la acción fetchGames con el término de búsqueda
-        dispatch(fetchGames(searchTerm.trim()));
+        // Llama a la acción getVideogame con el término de búsqueda
+        if (!searchTerm) { dispatch(getVideogames()) } else { dispatch(getVideogame(searchTerm.trim())) };
     };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleSearch()
+        }
+    }
 
 
     return (
         <div className={styles.container}>
-            <form>
-                <input type="search" placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                <button onClick={handleSearch} className={styles.button}>go</button>
-            </form>
+
+            <input type="search" placeholder="Search..." onKeyDown={handleKeyDown} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <button onClick={handleSearch} className={styles.button}>go</button>
+
         </div>
     )
 }

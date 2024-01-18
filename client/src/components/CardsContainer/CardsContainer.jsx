@@ -1,5 +1,6 @@
 import Card from "../Card/Card";
 import style from "./CardsContainer.module.scss";
+import { useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { getVideogamesNext, getVideogames } from '../../redux/actions.js';
@@ -7,9 +8,18 @@ import { getVideogamesNext, getVideogames } from '../../redux/actions.js';
 
 const CardsContainer = () => {
     const videoGames = useSelector(state => state.videoGames)
+    let arrayDividioEn15 = [];
+
+    useEffect(() => {
+        if (videoGames.length > 1) {
+            arrayDividioEn15 = videoGames.slice(0, 15)
+        } else {
+            arrayDividioEn15 = videoGames
+        }
+    }, []);
+
 
     const dispatch = useDispatch();
-    const arrayDividioEn15 = videoGames.slice(0, 15)
 
     const anterior = () => {
         dispatch(getVideogames())
@@ -21,7 +31,7 @@ const CardsContainer = () => {
     return (
         <div >
             <div className={style.Container}>
-                {arrayDividioEn15.map((videoGame) => {
+                {videoGames.map((videoGame) => {
                     return <Card
                         key={self.crypto.randomUUID()}
                         id={videoGame.id}

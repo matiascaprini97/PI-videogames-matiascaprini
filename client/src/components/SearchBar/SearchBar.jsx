@@ -10,7 +10,11 @@ const SearchBar = () => {
 
     const handleSearch = () => {
         // Llama a la acción getVideogame con el término de búsqueda
-        if (!searchTerm) { dispatch(getVideogames()) } else { dispatch(getVideogame(searchTerm.trim())) };
+        if (!searchTerm) { dispatch(getVideogames()) } else {
+            const searchTermArray = searchTerm.split(" ");
+            const joinedSearchTerm = searchTermArray.join("-");
+            dispatch(getVideogame(joinedSearchTerm));
+        }
     };
 
     const handleKeyDown = (event) => {

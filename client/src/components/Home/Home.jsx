@@ -1,18 +1,19 @@
 import styles from './Home.module.scss';
 import CardsContainer from '../CardsContainer/CardsContainer.jsx';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getVideogames } from '../../redux/actions.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { getVideogames, fetchGenres } from '../../redux/actions.js';
 import Loader from '../Utils/Loader/Loader.jsx';
 
 const Home = () => {
     // spinner
     const [loading, setLoading] = useState(true);
+    const genres = useSelector((state) => state.genres)
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 3000);
         return () => clearTimeout(timer);
     }, []);
     // dispatch
@@ -20,6 +21,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getVideogames());
+        dispatch(fetchGenres())
     }, []);
 
     return (
@@ -32,11 +34,11 @@ const Home = () => {
                 <div className={styles.envelop}>
                     <select>
                         <option value="">Todos los géneros</option>
-                        {/* {types.map((type) => (
-                            // <option key={type.name} value={type.name}>
-                            //     {type.name}
-                            // </option>
-                        ))} */}
+                        {genres.map((genres) => (
+                            <option key={genres.name} value={genres.name}>
+                                {genres.name}
+                            </option>
+                        ))}
                     </select>
 
                     <select >

@@ -15,6 +15,10 @@ const Nav = () => {
                 <Link to={PATHROUTES.FORM}>
                     <button className={style.button}>Create Videogame</button>
                 </Link>
+                <div></div>
+                <Link to={PATHROUTES.LANDING}>
+                    <button className={style.button}>Log out</button>
+                </Link>
             </div>
         </div>
     )

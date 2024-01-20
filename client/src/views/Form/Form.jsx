@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
-import UUID from 'uuid-int';
+import { fetchGenres } from '../../redux/actions.js';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import styles from './Form.module.scss'
 
 const Form = () => {
 
-    // const id = 0;
+    const genres = useSelector((state) => state.genres)
+    const dispatch = useDispatch();
 
-    // const generator = UUID(id);
+    useEffect(() => {
+        dispatch(fetchGenres())
+    }, []);
 
     const [form, setForm] = useState({
         // id: generator.uuid(),
@@ -107,8 +112,20 @@ const Form = () => {
 
                     <div>
                         <label className={styles.text} htmlFor="">Genre: </label>
-                        <input type="text" value={form.genre} onChange={changeHandler} name="genre" />
+                        <select value={form.genre} onChange={changeHandler} name="genre">
+                            <option>-- Select a genre --</option>
+                            {genres.map((genre) => (
+                                <option key={genre.name} value={genre.name}>
+                                    {genre.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
+
+                    {/* <div>
+                        <label className={styles.text} htmlFor="">Genre: </label>
+                        <input type="text" value={form.genre} onChange={changeHandler} name="genre" />
+                    </div> */}
                     <div>
                         <button className={styles.button} type="submit">submit</button>
                     </div>

@@ -4,20 +4,42 @@
 const axios = require("axios");
 
 
-const URL = "https://api.rawg.io/api/games";
-const KEY = "9350cd30f5af4d8392270aa555d4df37";
+const apiUrl = "https://api.rawg.io/api/games";
+const apiKey = "9350cd30f5af4d8392270aa555d4df37";
 
 const getVideogames = async (req, res) => {
     try {
-        const arr = (await axios(`${URL}?key=${KEY}`)).data
-        const videoGames = [arr];
+        let allGames = [];
+        let currentPage = 1;
 
-        return videoGames
-            ? res.json(videoGames)
-            : res.status(404).send("Videogames not found");
+        while (allGames.length < 101) {
+            // Realizar la solicitud GET a la API RAWG utilizando Axios
+            const response = await axios.get(apiUrl, {
+                params: {
+                    key: apiKey,
+                    page: currentPage,
+                },
+            });
+
+            // Agregar los juegos de la página actual a la lista
+            allGames = allGames.concat(response.data.results);
+
+            // Verificar si hay más páginas
+            if (response.data.next) {
+                currentPage++;
+            } else {
+                // No hay más páginas, terminar el bucle
+                break;
+            }
+        }
+
+        // Enviar la lista completa de juegos como respuesta
+        res.json(allGames);
     } catch (error) {
-        return res.status(500).send(error.message)
-    }
+        console.error('Error al obtener la lista de juegos', error);
+        res.status(500).send('Error interno del servidor');
+
+    };
 };
 
 module.exports = getVideogames;

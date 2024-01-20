@@ -1,10 +1,11 @@
-import { GET_VIDEOGAMES, GET_VIDEOGAME, GET_SORTED_AZ, GET_VIDEOGAMESNEXT, GET_VIDEOGAMESPREV, GET_VIDEOGAMEPORID } from "./actions";
+import { GET_VIDEOGAMES, GET_VIDEOGAME, GET_SORTED_AZ, GET_VIDEOGAMEPORID, SET_GENRES } from "./actions";
 
 
 const initialState = {
     videoGames: [],
     videoGame: [],
-    sortedVideoGameAZ: []
+    sortedVideoGameAZ: [],
+    genres: [],
 };
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -15,19 +16,14 @@ const rootReducer = (state = initialState, action) => {
         case GET_VIDEOGAMEPORID:
             return { ...state, videoGame: action.payload };
 
-        case GET_VIDEOGAMESNEXT:
-            return { ...state, videoGames: action.payload };
-
-        case GET_VIDEOGAMESPREV:
-            return { ...state, videoGames: action.payload };
-
         case GET_VIDEOGAME:
             return { videoGames: action.payload };
 
         case GET_SORTED_AZ:
-
             return { ...state, sortedVideoGameAZ: action.payload };
 
+        case SET_GENRES:
+            return { ...state, genres: action.payload };
 
         default:
             return { ...state };

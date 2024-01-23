@@ -62,7 +62,7 @@ const Form = () => {
         event.preventDefault()
         axios.post("http://localhost:3001/videogames", form)
             .then(res => alert(res))
-            .catch(err => alert(err));
+            .catch(err => console.log(err.message));
     }
 
 

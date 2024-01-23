@@ -1,6 +1,6 @@
 //Obtiene un arreglo de objetos, donde cada objeto
 // es un videojuego con su información.
-
+const { Videogame, Genre } = require("../db.js");
 const axios = require("axios");
 
 
@@ -12,7 +12,26 @@ const getVideogames = async (req, res) => {
         let allGames = [];
         let currentPage = 1;
 
+        // const videogameFromDB = await Videogame.findAll({
+        //     include: [
+        //         {
+        //             model: Genre,
+        //             attributes: ["name"],
+        //             through: {
+        //                 attributes: [],
+        //             },
+        //         },
+        //     ],
+        // });
+        // const formattedGamesFromDB = videogameFromDB.map((games) => ({
+        //     ...games.toJSON(),
+        //     genre: games.genre.map((genre) => genre.name),
+        // }));
+        // console.log("Games from DB:", formattedGamesFromDB);
+
         while (allGames.length < 101) {
+
+
             // Realizar la solicitud GET a la API RAWG utilizando Axios
             const response = await axios.get(apiUrl, {
                 params: {
@@ -34,7 +53,8 @@ const getVideogames = async (req, res) => {
         }
 
         // Enviar la lista completa de juegos como respuesta
-        res.json(allGames);
+        // const gamesFull = [...formattedGamesFromDB, ...allGames];
+        res.status(200).json(allGames);
     } catch (error) {
         console.error('Error al obtener la lista de juegos', error);
         res.status(500).send('Error interno del servidor');
@@ -43,3 +63,27 @@ const getVideogames = async (req, res) => {
 };
 
 module.exports = getVideogames;
+
+// const findAllPokemon = async (req, res) => {
+//     try {
+//       const pokemonsFromDB = await Pokemon.findAll({
+//         include: [
+//           {
+//             model: Type,
+//             attributes: ["name"],
+//             through: {
+//               attributes: [],
+//             },
+//           },
+//         ],
+//       });
+
+//       const formattedPokemonsFromDB = pokemonsFromDB.map((pokemon) => ({
+//         ...pokemon.toJSON(),
+//         type: pokemon.types.map((type) => type.name),
+//       }));
+//       console.log("Pokemons from DB:", formattedPokemonsFromDB);
+//       const remainingPokemonCount = 50 - formattedPokemonsFromDB.length;
+
+//       if (remainingPokemonCount > 0) {
+//         const {data} = await axios(${URL}?limit=${remainingPokemonCount});

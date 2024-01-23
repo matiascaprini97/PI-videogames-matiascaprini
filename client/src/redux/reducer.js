@@ -1,10 +1,9 @@
-import { GET_VIDEOGAMES, GET_VIDEOGAME, GET_SORTED_AZ, GET_VIDEOGAMEPORID, SET_GENRES } from "./actions";
+import { GET_VIDEOGAMES, GET_VIDEOGAME, ORDER, GET_VIDEOGAMEPORID, SET_GENRES, FILTER } from "./actions";
 
 
 const initialState = {
     videoGames: [],
     videoGame: [],
-    sortedVideoGameAZ: [],
     genres: [],
 };
 const rootReducer = (state = initialState, action) => {
@@ -17,10 +16,22 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, videoGame: action.payload };
 
         case GET_VIDEOGAME:
-            return { videoGames: action.payload };
+            return { ...state, videoGames: action.payload };
 
-        case GET_SORTED_AZ:
-            return { ...state, sortedVideoGameAZ: action.payload };
+        case FILTER:
+            return { ...state, videoGames: state.videoGames.filter((char) => char.genres === action.payload) };
+
+        case ORDER:
+            let copy = state.videoGames.sort((a, b) => {
+                if (action.payload === "A") {
+                    return a.id - b.id;
+                } else if (action.payload === "D") {
+                    return b.id - a.id;
+                } else {
+                    return 0;
+                }
+            })
+            return { ...state, videoGames: copy };
 
         case SET_GENRES:
             return { ...state, genres: action.payload };

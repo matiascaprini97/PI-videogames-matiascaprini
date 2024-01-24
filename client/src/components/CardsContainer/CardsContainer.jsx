@@ -22,7 +22,10 @@ const CardsContainer = () => {
         }
     }
     const siguiente = () => {
-        if (arrayDividioEn15.length === 15) {
+        if (max >= 98) {
+            setMin(0)
+            setMax(15)
+        } else {
             setMin(min + 15)
             setMax(max + 15)
         }

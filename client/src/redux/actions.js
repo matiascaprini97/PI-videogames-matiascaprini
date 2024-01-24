@@ -4,8 +4,13 @@ export const GET_VIDEOGAMES = "GET_VIDEOGAMES";
 export const GET_VIDEOGAME = "GET_VIDEOGAME";
 export const GET_VIDEOGAMEPORID = "GET_VIDEOGAMEPORID";
 export const FILTER = "FILTER";
-export const ORDER = "ORDER";
+export const ORDER_ASC = "ORDER_ASC";
+export const ORDER_DES = "ORDER_DES";
 export const SET_GENRES = "SET_GENRES";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+export const SET_TOTAL_PAGES = "SET_TOTAL_PAGES";
+export const RESET_FILTERS = "RESET_FILTERS";
+export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
 
 export const getVideogamePorId = (id) => {
     return async function (dispatch) {
@@ -71,16 +76,43 @@ export const getVideogames = () => {
 
 }
 
-export const filterCards = (genres) => {
-    return function (dispatch) {
-        if (genres === "") {
-            dispatch(getVideogames())
-        } else { dispatch({ type: FILTER, payload: genres }) }
-    };
-};
-export const orderCards = (order) => {
+export const filterCards = (genre) => {
+
     return {
-        type: ORDER,
-        payload: order,
+        type: FILTER,
+        payload: genre
+    }
+}
+export const orderCards = (sortbyTypeName) => ({
+    type: sortbyTypeName,
+    payload: sortbyTypeName
+});
+
+export const setCurrentPage = (currentPage) => ({
+    type: SET_CURRENT_PAGE,
+    payload: currentPage,
+});
+
+export const setTotalPages = (gamesPerPage) => (dispatch, getState) => {
+    const state = getState();
+    const totalPages = Math.ceil(state.videoGames.length / gamesPerPage);
+
+    dispatch({
+        type: SET_TOTAL_PAGES,
+        payload: totalPages,
+    });
+};
+
+export const filterByOrigin = (origin) => {
+    return {
+        type: FILTER_BY_ORIGIN,
+        payload: origin
+    }
+};
+
+export const resetFilters = () => {
+
+    return {
+        type: RESET_FILTERS,
     };
 };

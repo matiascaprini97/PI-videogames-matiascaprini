@@ -45,15 +45,40 @@ const Form = () => {
     const validate = (form) => {
         let errors = {};
         if (!form.name) {
-            errors = { ...errors, name: "Please input a videogame name." }
+            errors = { ...errors, name: "Por favor escribe el nombre del juego" }
         } else {
             errors = { ...errors, name: "" }
         };
 
         if (!form.description) {
-            errors = { ...errors, description: "Write a short description" }
+            errors = { ...errors, description: "Escribe una breve descrpición" }
         } else {
             errors = { ...errors, description: "" }
+        };
+        if (!form.platforms) {
+            errors = { ...errors, platforms: "Escribe las plataformas compatibles con el videojuego" }
+        } else {
+            errors = { ...errors, platforms: "" }
+        };
+        if (!form.image) {
+            errors = { ...errors, image: "Ingresa un URL de imagen" }
+        } else {
+            errors = { ...errors, image: "" }
+        };
+        if (!form.released) {
+            errors = { ...errors, released: "Ingresa la fecha de lanzamiento" }
+        } else {
+            errors = { ...errors, released: "" }
+        };
+        if (!form.rating) {
+            errors = { ...errors, rating: "Selecciona entre 1 y 10 el rating del juego" }
+        } else {
+            errors = { ...errors, rating: "" }
+        };
+        if (!form.genre) {
+            errors = { ...errors, genre: "Ingresa el género del juego" }
+        } else {
+            errors = { ...errors, genre: "" }
         };
 
         setErrors(errors);
@@ -74,25 +99,28 @@ const Form = () => {
                     <div>
                         <label className={styles.text} htmlFor="">Game title: </label>
                         <input type="text" value={form.name} onChange={changeHandler} name="name" />
-                        {errors.name && <span className={styles.text} >{errors.name}</span>}
                     </div>
+                    {errors.name && <span className={styles.textt} >{errors.name}</span>}
                     <div>
                         <label className={styles.text} htmlFor="">Short description: </label>
                         <input type="textarea" value={form.description} onChange={changeHandler} name="description" />
-                        {errors.description && <span className={styles.text} >{errors.description}</span>}
                     </div>
+                    {errors.description && <span className={styles.textt} >{errors.description}</span>}
                     <div>
                         <label className={styles.text} htmlFor="">Platforms: </label>
                         <input type="text" value={form.platforms} onChange={changeHandler} name="platforms" />
                     </div>
+                    {errors.platforms && <span className={styles.textt} >{errors.platforms}</span>}
                     <div>
                         <label className={styles.text} htmlFor="">Image URL: </label>
                         <input type="text" value={form.image} onChange={changeHandler} name="image" />
                     </div>
+                    {errors.image && <span className={styles.textt} >{errors.image}</span>}
                     <div>
                         <label className={styles.text} htmlFor="">Released data: </label>
                         <input type="date" value={form.released} onChange={changeHandler} name="released" />
                     </div>
+                    {errors.released && <span className={styles.textt} >{errors.released}</span>}
                     <div>
                         <label className={styles.text} htmlFor="">Rating: </label>
                         <select value={form.rating} onChange={changeHandler} name="rating">
@@ -109,6 +137,7 @@ const Form = () => {
                             <option value="10">10</option>
                         </select>
                     </div>
+                    {errors.rating && <span className={styles.textt} >{errors.rating}</span>}
 
                     <div>
                         <label className={styles.text} htmlFor="">Genre: </label>
@@ -121,6 +150,7 @@ const Form = () => {
                             ))}
                         </select>
                     </div>
+                    {errors.genre && <span className={styles.textt} >{errors.genre}</span>}
 
                     {/* <div>
                         <label className={styles.text} htmlFor="">Genre: </label>

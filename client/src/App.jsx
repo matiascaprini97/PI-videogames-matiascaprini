@@ -6,9 +6,19 @@ import Form from './views/Form/Form.jsx';
 import Detail from './views/Detail/Detail.jsx';
 import Nav from './components/Nav/Nav.jsx'
 import './App.css';
+// import { useEffect } from 'react';
+// import { getVideogames } from './redux/actions.js';
+// import { useDispatch } from 'react-redux';
 
 function App() {
   const { pathname } = useLocation();
+  // const dispatch = useDispatch()
+
+  // useEffect(() => {
+
+  //   dispatch(getVideogames());
+
+  // }, [dispatch]);
 
   return (
     <div className="App">

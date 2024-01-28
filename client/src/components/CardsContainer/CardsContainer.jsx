@@ -1,5 +1,5 @@
 import Card from "../Card/Card";
-import style from "./CardsContainer.module.scss";
+import style from "./CardsContainer.module.css";
 import { useSelector } from "react-redux";
 import { useState } from "react"
 

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
-import PATHROUTES from "../../helper/PathRoutes";
-import styles from './LandingPage.module.scss';
+import styles from './LandingPage.module.css';
 import { useState, useEffect } from 'react';
 
 const LandingPage = () => {

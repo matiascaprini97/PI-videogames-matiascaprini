@@ -9,7 +9,9 @@ import {
     SET_TOTAL_PAGES,
     SET_CURRENT_PAGE,
     RESET_FILTERS,
-    FILTER_BY_ORIGIN
+    FILTER_BY_ORIGIN,
+    RATING_ASC,
+    RATING_DES
 } from "./actions";
 
 
@@ -61,6 +63,19 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 videoGames: state.videoGames.slice().sort((a, b) => b.name.localeCompare(a.name)),
+                sortBy: action.payload
+            };
+        case RATING_ASC:
+            return {
+                ...state,
+                videoGames: state.videoGames.slice().sort((a, b) => b.rating - a.rating),
+                sortBy: action.payload
+            };
+
+        case RATING_DES:
+            return {
+                ...state,
+                videoGames: state.videoGames.slice().sort((a, b) => a.rating - b.rating),
                 sortBy: action.payload
             };
 

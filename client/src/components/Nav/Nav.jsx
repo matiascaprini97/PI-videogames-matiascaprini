@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import style from "./Nav.module.scss";
+import style from "./Nav.module.css";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import PATHROUTES from "../../helper/PathRoutes"
 

@@ -6,6 +6,8 @@ export const GET_VIDEOGAMEPORID = "GET_VIDEOGAMEPORID";
 export const FILTER = "FILTER";
 export const ORDER_ASC = "ORDER_ASC";
 export const ORDER_DES = "ORDER_DES";
+export const RATING_ASC = "RATING_ASC";
+export const RATING_DES = "RATING_DES";
 export const SET_GENRES = "SET_GENRES";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const SET_TOTAL_PAGES = "SET_TOTAL_PAGES";
@@ -84,6 +86,11 @@ export const filterCards = (genre) => {
     }
 }
 export const orderCards = (sortbyTypeName) => ({
+    type: sortbyTypeName,
+    payload: sortbyTypeName
+});
+
+export const ratingCards = (sortbyTypeName) => ({
     type: sortbyTypeName,
     payload: sortbyTypeName
 });

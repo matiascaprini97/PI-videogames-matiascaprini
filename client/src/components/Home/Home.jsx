@@ -1,10 +1,9 @@
-import styles from './Home.module.scss';
+import styles from './Home.module.css';
 import CardsContainer from '../CardsContainer/CardsContainer.jsx';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGenres, filterCards, orderCards, resetFilters, filterByOrigin, setTotalPages, getVideogames } from '../../redux/actions.js';
+import { fetchGenres, filterCards, orderCards, resetFilters, filterByOrigin, ratingCards, getVideogames } from '../../redux/actions.js';
 import Loader from '../Utils/Loader/Loader.jsx';
-import Pagination from '../Pagination/Pagination.jsx';
 
 const Home = () => {
     // spinner
@@ -58,6 +57,18 @@ const Home = () => {
             dispatch(orderCards(value));
         }
     }
+    const handleOrderRating = (event) => {
+        const { value } = event.target;
+        console.log('Rating:', value);
+        if (value === 'resetAll') {
+            dispatch(resetFilters());
+        } else {
+            // Lógica para manejar cambios en el orden de clasificación
+            // Puedes agregar dispatch para acciones relacionadas con la clasificación aquí
+
+            dispatch(ratingCards(value));
+        }
+    }
 
 
     const handleGenre = (event) => {
@@ -80,25 +91,32 @@ const Home = () => {
 
             ) : (
                 <div className={styles.envelop}>
-                    <select name='genre' value={filterOptions.genreFilter} onChange={handleGenre}>
-                        <option value="">Todos los géneros</option>
-                        {genres.map((genre) => (
-                            <option key={genre.name} value={genre.name}>
-                                {genre.name}
-                            </option>
-                        ))}
-                    </select>
+                    <div className={styles.containerSelect}>
+                        <select name='genre' value={filterOptions.genreFilter} onChange={handleGenre} className={styles.content}>
+                            <option value="">Todos los géneros</option>
+                            {genres.map((genre) => (
+                                <option key={genre.name} value={genre.name}>
+                                    {genre.name}
+                                </option>
+                            ))}
+                        </select>
+                        <select name='sortBy' value={filterOptions.sortBy} onChange={handleOrderRating} className={styles.content}>
+                            <option value="resetAll">Rating</option>
+                            <option value="RATING_ASC">Ascendente</option>
+                            <option value="RATING_DES">Descendente</option>
+                        </select>
 
-                    <select name="origin" value={filterOptions.originFilter} onChange={handleGenre}>
-                        <option value="ALL">Todos los orígenes</option>
-                        <option value="API">DDBB</option>
-                        <option value="DDBB">API</option>
-                    </select>
-                    <select name="sortBy" value={filterOptions.sortBy} onChange={handleOrder}>
-                        <option value="resetAll">Default</option>
-                        <option value="ORDER_ASC">Ascendente</option>
-                        <option value="ORDER_DES">Descendente</option>
-                    </select>
+                        <select name="origin" value={filterOptions.originFilter} onChange={handleGenre} className={styles.content}>
+                            <option value="ALL">Todos los orígenes</option>
+                            <option value="API">DDBB</option>
+                            <option value="DDBB">API</option>
+                        </select>
+                        <select name="sortBy" value={filterOptions.sortBy} onChange={handleOrder} className={styles.content}>
+                            <option value="resetAll">A-Z</option>
+                            <option value="ORDER_ASC">Ascendente</option>
+                            <option value="ORDER_DES">Descendente</option>
+                        </select>
+                    </div>
                     <div className={styles.container}>
                         <h1 className={styles.title}>Videogames</h1>
                         <CardsContainer />

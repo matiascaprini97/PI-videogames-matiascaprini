@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { fetchGenres } from '../../redux/actions.js';
 import { useDispatch, useSelector } from 'react-redux';
-
-
-import styles from './Form.module.scss'
+import styles from './Form.module.css'
 
 const Form = () => {
 

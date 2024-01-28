@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getVideogamePorId } from '../../redux/actions.js';
 import { useParams } from "react-router-dom";
 import Loader from '../../components/Utils/Loader/Loader.jsx';
-import styles from './Detail.module.scss'
+import styles from './Detail.module.css'
 import { Link } from "react-router-dom";
 
 

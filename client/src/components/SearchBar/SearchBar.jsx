@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./SearchBar.module.scss"
+import styles from "./SearchBar.module.css"
 import { useDispatch } from 'react-redux';
 import { fetchGenres, getVideogame, getVideogames } from '../../redux/actions';
 

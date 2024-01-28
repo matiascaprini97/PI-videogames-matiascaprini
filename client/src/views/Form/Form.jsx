@@ -45,13 +45,13 @@ const Form = () => {
     const validate = (form) => {
         let errors = {};
         if (!form.name) {
-            errors = { ...errors, name: "Por favor escribe el nombre del juego" }
+            errors.name = "Por favor escribe el nombre del juego"
         } else {
             errors = { ...errors, name: "" }
         };
 
         if (!form.description) {
-            errors = { ...errors, description: "Escribe una breve descrpición" }
+            errors.description = "Escribe una breve descrpición"
         } else {
             errors = { ...errors, description: "" }
         };
@@ -86,7 +86,10 @@ const Form = () => {
     const submitHandler = (event) => {
         event.preventDefault()
         axios.post("http://localhost:3001/videogames", form)
-            .then(res => alert(res))
+            .then((res) => {
+                alert("El juego fue creado con éxito!")
+                window.location.reload()
+            })
             .catch(err => console.log(err.message));
     }
 

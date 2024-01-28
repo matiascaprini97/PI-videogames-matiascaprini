@@ -95,7 +95,7 @@ const Home = () => {
                         <option value="DDBB">API</option>
                     </select>
                     <select name="sortBy" value={filterOptions.sortBy} onChange={handleOrder}>
-                        <option value="resetAll">Reset All</option>
+                        <option value="resetAll">Default</option>
                         <option value="ORDER_ASC">Ascendente</option>
                         <option value="ORDER_DES">Descendente</option>
                     </select>

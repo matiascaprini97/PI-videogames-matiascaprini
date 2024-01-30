@@ -100,21 +100,21 @@ const Home = () => {
                                 </option>
                             ))}
                         </select>
-                        <select name='sortBy' value={filterOptions.sortBy} onChange={handleOrderRating} className={styles.content}>
-                            <option value="resetAll">Rating</option>
-                            <option value="RATING_ASC">Ascendente</option>
-                            <option value="RATING_DES">Descendente</option>
-                        </select>
 
                         <select name="origin" value={filterOptions.originFilter} onChange={handleGenre} className={styles.content}>
-                            <option value="ALL">Todos los orígenes</option>
-                            <option value="API">DDBB</option>
-                            <option value="DDBB">API</option>
+                            <option value="">Todos los orígenes</option>
+                            <option value="DDBB">DDBB</option>
+                            <option value="API">API</option>
                         </select>
                         <select name="sortBy" value={filterOptions.sortBy} onChange={handleOrder} className={styles.content}>
                             <option value="resetAll">A-Z</option>
                             <option value="ORDER_ASC">Ascendente</option>
                             <option value="ORDER_DES">Descendente</option>
+                        </select>
+                        <select name='sortBy' value={filterOptions.sortBy} onChange={handleOrderRating} className={styles.content}>
+                            <option value="resetAll">Rating</option>
+                            <option value="RATING_ASC">Ascendente</option>
+                            <option value="RATING_DES">Descendente</option>
                         </select>
                     </div>
                     <div className={styles.container}>

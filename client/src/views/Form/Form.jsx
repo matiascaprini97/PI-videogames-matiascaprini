@@ -3,6 +3,7 @@ import axios from 'axios';
 import { fetchGenres } from '../../redux/actions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Form.module.css'
+import Validate from "./Validate.js";
 
 const Form = () => {
 
@@ -14,82 +15,63 @@ const Form = () => {
     }, []);
 
     const [form, setForm] = useState({
-        // id: generator.uuid(),
         name: "",
         description: "",
         platforms: "",
         image: "",
         released: "",
         rating: "",
-        genre: ""
+        genre: []
     });
 
-    const [errors, setErrors] = useState({
-        // id: generator.uuid(),
-        name: "",
-        description: "",
-        platforms: "",
-        image: "",
-        released: "",
-        rating: "",
-        genre: ""
-    });
+    const [errors, setErrors] = useState({});
+
     const changeHandler = (event) => {
-        const property = event.target.name;
-        const value = event.target.value;
-        setForm({ ...form, [property]: value })
-        validate({ ...form, [property]: value })
+        if (event.target.name === "genre") {
+            const selectedGenres = Array.from(
+                event.target.selectedOptions,
+                (option) => option.value
+            );
+
+            setForm({ ...form, genre: selectedGenres })
+        } else {
+            const property = event.target.name;
+            const value = event.target.value;
+            setForm({ ...form, [property]: value });
+        }
+        const validateError = Validate({ ...form, [event.target.name]: event.target.value });
+        setErrors(validateError)
     }
-    const validate = (form) => {
-        let errors = {};
-        if (!form.name) {
-            errors.name = "Por favor escribe el nombre del juego"
-        } else {
-            errors = { ...errors, name: "" }
-        };
 
-        if (!form.description) {
-            errors.description = "Escribe una breve descrpición"
-        } else {
-            errors = { ...errors, description: "" }
-        };
-        if (!form.platforms) {
-            errors = { ...errors, platforms: "Escribe las plataformas compatibles con el videojuego" }
-        } else {
-            errors = { ...errors, platforms: "" }
-        };
-        if (!form.image) {
-            errors = { ...errors, image: "Ingresa un URL de imagen" }
-        } else {
-            errors = { ...errors, image: "" }
-        };
-        if (!form.released) {
-            errors = { ...errors, released: "Ingresa la fecha de lanzamiento" }
-        } else {
-            errors = { ...errors, released: "" }
-        };
-        if (!form.rating) {
-            errors = { ...errors, rating: "Selecciona entre 1 y 10 el rating del juego" }
-        } else {
-            errors = { ...errors, rating: "" }
-        };
-        if (!form.genre) {
-            errors = { ...errors, genre: "Ingresa el género del juego" }
-        } else {
-            errors = { ...errors, genre: "" }
-        };
+    const resetForm = () => {
+        setForm({
+            name: "",
+            description: "",
+            platforms: "",
+            image: "",
+            released: "",
+            rating: "",
+            genre: []
+        })
+    }
 
-        setErrors(errors);
-    };
     const submitHandler = (event) => {
         event.preventDefault()
-        axios.post("http://localhost:3001/videogames", form)
-            .then((res) => {
-                alert("El juego fue creado con éxito!")
-                window.location.reload()
-            })
-            .catch(err => console.log(err.message));
-    }
+        const formularioValido = Object.values(errors).every((value) => value === "")
+        if (formularioValido) {
+
+            axios.post("http://localhost:3001/videogames", form)
+                .then((res) => {
+                    alert("El juego fue creado con éxito!")
+                })
+                .catch(err => console.log(err.message));
+            resetForm()
+        } else {
+            console.error("Formulario no válido")
+        }
+    };
+
+
 
 
     return (
@@ -97,66 +79,102 @@ const Form = () => {
             <div className={styles.card}>
                 <h1 className={styles.text}>Create a new videogame</h1>
                 <form className={styles.form} onSubmit={submitHandler}>
-                    <div>
-                        <label className={styles.text} htmlFor="">Game title: </label>
-                        <input type="text" value={form.name} onChange={changeHandler} name="name" />
+                    <div className={styles.input}>
+                        <div className={styles.lal}>
+                            <label className={styles.text} htmlFor="">Game title: </label>
+                        </div>
+                        <div className={styles.lal}>
+                            <input type="text" value={form.name} onChange={changeHandler} name="name" />
+                        </div>
                     </div>
-                    {errors.name && <span className={styles.textt} >{errors.name}</span>}
-                    <div>
-                        <label className={styles.text} htmlFor="">Short description: </label>
-                        <input type="textarea" value={form.description} onChange={changeHandler} name="description" />
+                    <div className={styles.input}>
+                        {errors.name && <span className={styles.textt} >{errors.name}</span>}
                     </div>
-                    {errors.description && <span className={styles.textt} >{errors.description}</span>}
-                    <div>
-                        <label className={styles.text} htmlFor="">Platforms: </label>
-                        <input type="text" value={form.platforms} onChange={changeHandler} name="platforms" />
+                    <div className={styles.input}>
+                        <div className={styles.lal}>
+                            <label className={styles.text} htmlFor="">Short description: </label>
+                        </div>
+                        <div className={styles.lal}>
+                            <input type="textarea" value={form.description} onChange={changeHandler} name="description" />
+                        </div>
                     </div>
-                    {errors.platforms && <span className={styles.textt} >{errors.platforms}</span>}
-                    <div>
-                        <label className={styles.text} htmlFor="">Image URL: </label>
-                        <input type="text" value={form.image} onChange={changeHandler} name="image" />
+                    <div className={styles.input}>
+                        {errors.description && <span className={styles.textt} >{errors.description}</span>}
                     </div>
-                    {errors.image && <span className={styles.textt} >{errors.image}</span>}
-                    <div>
-                        <label className={styles.text} htmlFor="">Released data: </label>
-                        <input type="date" value={form.released} onChange={changeHandler} name="released" />
+                    <div className={styles.input}>
+                        <div className={styles.lal}>
+                            <label className={styles.text} htmlFor="">Platforms: </label>
+                        </div>
+                        <div className={styles.lal}>
+                            <input type="text" value={form.platforms} onChange={changeHandler} name="platforms" />
+                        </div>
                     </div>
-                    {errors.released && <span className={styles.textt} >{errors.released}</span>}
-                    <div>
-                        <label className={styles.text} htmlFor="">Rating: </label>
-                        <select value={form.rating} onChange={changeHandler} name="rating">
-                            <option value="">-- Select a rating --</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
+                    <div className={styles.input}>
+                        {errors.platforms && <span className={styles.textt} >{errors.platforms}</span>}
                     </div>
-                    {errors.rating && <span className={styles.textt} >{errors.rating}</span>}
+                    <div className={styles.input}>
+                        <div className={styles.lal}>
+                            <label className={styles.text} htmlFor="">Image URL: </label>
+                        </div>
+                        <div className={styles.lal}>
+                            <input type="text" value={form.image} onChange={changeHandler} name="image" />
+                        </div>
+                    </div>
+                    <div className={styles.input}>
+                        {errors.image && <span className={styles.textt} >{errors.image}</span>}
+                    </div>
+                    <div className={styles.input}>
+                        <div className={styles.lal}>
+                            <label className={styles.text} htmlFor="">Released data: </label>
+                        </div>
+                        <div className={styles.lal}>
+                            <input type="date" value={form.released} onChange={changeHandler} name="released" />
+                        </div>
+                    </div>
+                    <div className={styles.input}>
+                        {errors.released && <span className={styles.textt} >{errors.released}</span>}
+                    </div>
+                    <div className={styles.input}>
+                        <div className={styles.lal}>
+                            <label className={styles.text} htmlFor="">Rating: </label>
+                        </div>
+                        <div className={styles.lal}>
+                            <select value={form.rating} onChange={changeHandler} name="rating">
+                                <option value="">-- Select a rating --</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className={styles.input}>
+                        {errors.rating && <span className={styles.textt} >{errors.rating}</span>}
+                    </div>
 
                     <div>
-                        <label className={styles.text} htmlFor="">Genre: </label>
-                        <select value={form.genre} onChange={changeHandler} name="genre">
-                            <option>-- Select a genre --</option>
-                            {genres.map((genre) => (
-                                <option key={genre.name} value={genre.name}>
-                                    {genre.name}
-                                </option>
-                            ))}
-                        </select>
+                        <div className={styles.lal}>
+                            <label className={styles.text} htmlFor="">Genre: </label>
+                        </div>
+                        <div>
+                            <select
+                                className={styles.miSelect}
+                                multiple
+                                onChange={changeHandler}
+                                name="genre">
+                                <option>-- Select a genre --</option>
+                                {genres.map((genre) => (
+                                    <option key={genre.name} value={genre.name}>
+                                        {genre.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
-                    {errors.genre && <span className={styles.textt} >{errors.genre}</span>}
-
-                    {/* <div>
-                        <label className={styles.text} htmlFor="">Genre: </label>
-                        <input type="text" value={form.genre} onChange={changeHandler} name="genre" />
-                    </div> */}
+                    <div className={styles.input}>
+                        {errors.genre && <span className={styles.textt} >{errors.genre}</span>}
+                    </div>
                     <div>
                         <button className={styles.button} type="submit">submit</button>
                     </div>

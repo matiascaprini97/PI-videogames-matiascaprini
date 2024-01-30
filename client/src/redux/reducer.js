@@ -20,10 +20,6 @@ const initialState = {
     oVideoGames: [],
     videoGame: [],
     genres: [],
-    // currentPage: 1,
-    // gamesPerPage: 20,
-    // storedPage: "",
-    // totalPages: 1,
     originFilter: 'ALL',
     sortBy: "Reset All",
     sortOrder: "asc",
@@ -44,7 +40,7 @@ const rootReducer = (state = initialState, action) => {
         case FILTER:
             const filteredGenres = action.payload === "" // Chequea si se seleccionó "Select Genre"
                 ? state.oVideoGames // Utiliza la lista completa de los juegos
-                : state.videoGames.filter((game) => game.genres.some(genre => genre.name === action.payload));
+                : state.videoGames.filter((game) => game.genres.some(genre => genre === action.payload));
 
             return {
                 ...state,
@@ -106,13 +102,13 @@ const rootReducer = (state = initialState, action) => {
 
         case FILTER_BY_ORIGIN:
 
-            const filteredGamesOrigin = action.payload === 'All'
+            const filteredGamesOrigin = action.payload === ''
                 ? state.oVideoGames // Utiliza la lista completa de games
                 : state.oVideoGames.filter((game) => {
                     // Si el origen seleccionado es 'All', devuelve true para todos los games
                     // Si el origen seleccionado es 'API', filtra por api: true
                     // Si el origen seleccionado es 'DDBB', filtra por api: false
-                    return action.payload === 'All' || (action.payload === 'API' ? game.api : !game.api);
+                    return action.payload === 'API' ? game.api : !game.api;
                 });
 
             return {

@@ -56,12 +56,12 @@ const getGameByName = async (req, res) => {
         const gameNameAPI = {
             id,
             name,
-            background_image,
+            image: background_image,
             description,
             platforms: arrPlataform,
             released,
             rating,
-            genres,
+            genres: arrGenres,
         };
 
         console.log("Respuesta de la API:", gameNameAPI); // Agrega esta línea para depurar

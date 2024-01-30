@@ -37,5 +37,6 @@ module.exports = (sequelize) => {
         max: 10
       }
     },
-  });
+  },
+    { timestamps: false });
 };

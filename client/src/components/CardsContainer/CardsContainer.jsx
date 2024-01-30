@@ -37,13 +37,13 @@ const CardsContainer = () => {
             <div className={style.Container}>
                 {arrayDividioEn15.map((videoGame) => {
                     return <Card
-                        key={self.crypto.randomUUID()}
+                        key={videoGame.api ? `api_${videoGame.id}` : `db_${videoGame.id}`}
                         id={videoGame.id}
                         name={videoGame.name}
-                        image={videoGame.background_image}
+                        image={videoGame.image}
                         released={videoGame.released}
                         rating={videoGame.rating}
-                        genres={videoGame.genres[0].name}
+                        genres={videoGame.genres}
                     />
                 })}
             </div>

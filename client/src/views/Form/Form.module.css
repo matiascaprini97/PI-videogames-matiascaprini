@@ -1,10 +1,15 @@
+@font-face {
+    font-family: 'zrnic';
+    src: url('../../../fonts/zrnic\ rg.ttf');
+}
+
 .card {
     position: relative;
     background-size: auto;
     background-color: #300930;
     background-position: center;
     padding: 10px;
-    height: 80vh;
+    height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,19 +25,56 @@
     }
 }
 
+.miSelect {
+    width: 200px;
+    height: 90px;
+    padding: 3px;
+    border: none;
+    border-radius: 5px;
+    overflow-y: auto;
+    font-size: 14px;
+    background-color: #00000079;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s;
+    font-family: 'zrnic';
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px #000000;
+}
+
+.miSelect:hover,
+
+.miSelect:focus {
+    border-color: #00080e;
+    background-color: #000000;
+}
+
+.miSelect option {
+    padding: 5px;
+    margin: 2px;
+    border-radius: 3px;
+    background-color: #00fdfd85;
+    transition: background-color 0.3s;
+}
+
+.miSelect option:checked {
+    background-color: #000305;
+    color: #fff;
+}
+
 .form {
-    position: relative;
+    /* position: relative; */
     background-size: auto;
     background-color: #300930;
     background-position: center;
     padding: 10px;
-    height: 80vh;
+    height: 95vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
     padding: 10px;
     border-radius: 20px;
-    flex-direction: column;
     opacity: 0.8;
 }
 
@@ -45,8 +87,26 @@
 
 }
 
+.lal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 25px;
+
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100px;
+    width: 400px;
+}
+
 .text {
-    color: #c5c3c3;
+    color: #fffefe;
 }
 
 .textt {
@@ -69,7 +129,7 @@
     color: #000000;
     font-size: 20px;
     padding: 8px 20px 10px 20px;
-    border: solid #121517 9px;
+    border: solid #121517 5px;
     text-decoration: none;
     font-family: 'zrnic', sans-serif;
     margin-right: 30px;

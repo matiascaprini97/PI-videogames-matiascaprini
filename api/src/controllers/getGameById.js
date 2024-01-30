@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { Videogame, Genre } = require("../db")
 
 const URL = "https://api.rawg.io/api/games/";
 const KEY = "9350cd30f5af4d8392270aa555d4df37";
@@ -8,6 +9,12 @@ const getGameById = async (req, res) => {
 
     try {
         const { id } = req.params;
+        const idDb = await Videogame.findByPk(id)
+        console.log(idDb, "REspuesta")
+        if (idDb) {
+            res.status(200).json(idDb)
+        }
+
         const { name, description, parent_platforms, background_image, released, rating, genres } = (await axios(`${URL}${id}?key=${KEY}`)).data
 
         const arrPlataform = [];
@@ -42,6 +49,7 @@ const getGameById = async (req, res) => {
         return game.name
             ? res.json(game)
             : res.status(404).send("Game not found");
+
 
     } catch (error) {
         return res.status(500).send(error.message)
